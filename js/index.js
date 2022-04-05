@@ -1,3 +1,5 @@
+'use strict';
+
 const appendWeatherStatus = (function() {
   return function(text) {
     document.getElementById('weatherStatusText').textContent = text;
