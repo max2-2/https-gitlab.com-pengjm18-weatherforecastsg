@@ -4,7 +4,7 @@ const appendWeatherStatus = (function() {
   };
 }());
 
-const weatherStatusHandler = (function() {
+const handleWeatherStatus = (function() {
   let state = 'getAddrDetails';
   return function(searchAddress) {
     if (searchAddress.length === 0) {
@@ -21,7 +21,7 @@ const weatherStatusHandler = (function() {
               appendWeatherStatus('Invalid Longitude, Latitude result.');
               return false;
             }
-            setTimeout(weatherStatusHandler, 0, {
+            setTimeout(handleWeatherStatus, 0, {
               longitude: response.results[0].LONGITUDE,
               latitude: response.results[0].LATITUDE
             });
@@ -40,7 +40,7 @@ const weatherStatusHandler = (function() {
           'async': 'true'
         };
         $.post(settings).done(function(response) {
-          setTimeout(weatherStatusHandler, 0, {
+          setTimeout(handleWeatherStatus, 0, {
             longitude: searchAddress.longitude,
             latitude: searchAddress.latitude,
             token: response.access_token,
@@ -60,7 +60,7 @@ const weatherStatusHandler = (function() {
               appendWeatherStatus('Invalid Town result.');
               return false;
             }
-            setTimeout(weatherStatusHandler, 0, {town: response[0].pln_area_n});
+            setTimeout(handleWeatherStatus, 0, {town: response[0].pln_area_n});
             state = 'getWeatherForecast';
           }
         });
@@ -95,6 +95,6 @@ const weatherStatusHandler = (function() {
   document.getElementById('submitButton')
       .addEventListener('click', function handleSubmitButtonClick(event) {
         event.preventDefault();
-        weatherStatusHandler(document.getElementById('addressText').value);
+        handleWeatherStatus(document.getElementById('addressText').value);
       }, false);
 }());
